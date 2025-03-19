@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pearson MyLab AI Solver - Options</title>
+  <style>
+    :root {
+      --primary-color: #3498db;
+      --primary-hover: #2980b9;
+      --success-color: #2ecc71;
+      --error-color: #e74c3c;
+      --warning-color: #f39c12;
+      --text-color: #333;
+      --text-muted: #7f8c8d;
+      --border-color: #ddd;
+      --bg-color: #fff;
+      --bg-light: #f8f9fa;
+      --shadow: 0 2px 5px rgba(0,0,0,0.1);
+      --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-main);
+      color: var(--text-color);
+      background-color: var(--bg-light);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      margin: 0;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      margin-right: 15px;
+      background-color: white;
+    }
+
+    .card {
+      background-color: var(--bg-color);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .card-header {
+      background-color: var(--bg-light);
+      padding: 15px 20px;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .input-description {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 14px;
+      font-family: var(--font-main);
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .toggle-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .toggle-container:last-child {
+      margin-bottom: 0;
+    }
+
+    .toggle-label {
+      flex-grow: 1;
+    }
+
+    .toggle-description {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 24px;
+      margin-left: 10px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .3s;
+      border-radius: 24px;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .toggle-slider {
+      background-color: var(--success-color);
+    }
+
+    input:checked + .toggle-slider:before {
+      transform: translateX(24px);
+    }
+
+    .range-container {
+      margin-top: 10px;
+    }
+
+    .range-slider {
+      width: 100%;
+      margin-bottom: 5px;
+    }
+
+    .range-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 6px;
+      border: none;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+    }
+
+    .btn-outline:hover {
+      background-color: rgba(52, 152, 219, 0.1);
+    }
+
+    .alert {
+      padding: 12px 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    .alert-success {
+      background-color: rgba(46, 204, 113, 0.1);
+      border: 1px solid var(--success-color);
+      color: var(--success-color);
+    }
+
+    .alert-error {
+      background-color: rgba(231, 76, 60, 0.1);
+      border: 1px solid var(--error-color);
+      color: var(--error-color);
+    }
+
+    .alert-warning {
+      background-color: rgba(243, 156, 18, 0.1);
+      border: 1px solid var(--warning-color);
+      color: var(--warning-color);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px 0;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo-icon"></div>
+      <h1>Pearson MyLab AI Solver - Options</h1>
+    </div>
+
+    <div id="status-message" style="display: none;" class="alert alert-success"></div>
+
+    <div class="card">
+      <div class="card-header">API Configuration</div>
+      <div class="card-body">
+        <div class="form-group">
+          <label for="apiKey">Anthropic API Key</label>
+          <div class="input-description">
+            Enter your Anthropic API key to use Claude AI for solving questions. 
+            You can get an API key from <a href="https://console.anthropic.com/" target="_blank">Anthropic's console</a>.
+          </div>
+          <input type="password" id="apiKey" placeholder="sk-ant-api-...">
+        </div>
+
+        <div class="form-group">
+          <label for="model">AI Model</label>
+          <select id="model">
+            <option value="claude-3-haiku-20240307">Claude 3 Haiku (Faster)</option>
+            <option value="claude-3-sonnet-20240229">Claude 3 Sonnet (More Accurate)</option>
+            <option value="claude-3-opus-20240229">Claude 3 Opus (Most Accurate)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">Solver Settings</div>
+      <div class="card-body">
+        <div class="form-group">
+          <div class="toggle-container">
+            <div class="toggle-label">
+              <span>Auto-Answer Questions</span>
+              <div class="toggle-description">Automatically answer questions when detected on the page</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="solverEnabled">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="toggle-container">
+            <div class="toggle-label">
+              <span>Auto-Navigate to Next Question</span>
+              <div class="toggle-description">Automatically proceed to the next question after answering</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="autoNavigate">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="confidenceThreshold">Confidence Threshold</label>
+          <div class="input-description">
+            Only automatically answer questions when the AI's confidence is above this threshold
+          </div>
+          <div class="range-container">
+            <input type="range" id="confidenceThreshold" min="0" max="1" step="0.05" class="range-slider">
+            <div class="range-labels">
+              <span>Low</span>
+              <span id="confidenceValue">0.75</span>
+              <span>High</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="solverSpeed">Solver Speed</label>
+          <select id="solverSpeed">
+            <option value="slow">Slow (More Natural)</option>
+            <option value="normal">Normal</option>
+            <option value="fast">Fast</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">Question Types</div>
+      <div class="card-body">
+        <div class="toggle-container">
+          <div class="toggle-label">
+            <span>Multiple Choice</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="multipleChoice">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="toggle-container">
+          <div class="toggle-label">
+            <span>True/False</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="trueFalse">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="toggle-container">
+          <div class="toggle-label">
+            <span>Fill in the Blank</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="fillInBlank">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="toggle-container">
+          <div class="toggle-label">
+            <span>Matching</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="matching">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="toggle-container">
+          <div class="toggle-label">
+            <span>Ordering</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="ordering">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">Advanced Settings</div>
+      <div class="card-body">
+        <div class="toggle-container">
+          <div class="toggle-label">
+            <span>Debug Mode</span>
+            <div class="toggle-description">Show detailed processing information in the console</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="debugMode">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label for="customPrompt">Custom AI Prompt (Optional)</label>
+          <div class="input-description">
+            Customize the prompt sent to the AI. Use placeholders: {{QUESTION}}, {{CONTEXT}}, {{OPTIONS}}
+          </div>
+          <textarea id="customPrompt" placeholder="Leave blank to use the default prompt"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-container">
+      <button id="resetBtn" class="btn btn-outline">Reset to Defaults</button>
+      <button id="saveBtn" class="btn btn-primary">Save Settings</button>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>Pearson MyLab AI Solver v1.0.0 | <a href="https://github.com/username/pearson-mylab-ai-solver" target="_blank">Documentation</a></p>
+  </footer>
+
+  <script src="js/options.js"></script>
+</body>
+</html> 

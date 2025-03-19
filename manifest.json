@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "Pearson MyLab AI Solver",
+  "version": "1.0.0",
+  "description": "AI-powered assistant for solving questions in Pearson MyLab",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://*.pearson.com/*"
+  ],
+  "background": {
+    "service_worker": "src/js/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.pearson.com/*",
+        "*://*.mylab.pearson.com/*",
+        "*://*.mylabmastering.pearson.com/*"
+      ],
+      "js": [
+        "src/js/debugUtils.js",
+        "src/js/content.js"
+      ],
+      "css": ["src/css/content.css"]
+    }
+  ],
+  "action": {
+    "default_popup": "src/popup.html",
+    "default_icon": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "options_page": "src/options.html"
+} 

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pearson MyLab AI Solver</title>
+  <style>
+    :root {
+      --primary-color: #3498db;
+      --primary-hover: #2980b9;
+      --success-color: #2ecc71;
+      --error-color: #e74c3c;
+      --warning-color: #f39c12;
+      --text-color: #333;
+      --text-muted: #7f8c8d;
+      --border-color: #ddd;
+      --bg-color: #fff;
+      --bg-light: #f8f9fa;
+      --shadow: 0 2px 5px rgba(0,0,0,0.1);
+      --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-main);
+      width: 320px;
+      max-height: 600px;
+      overflow-y: auto;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      padding: 0;
+      margin: 0;
+    }
+
+    .header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 12px 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow);
+    }
+
+    .header h1 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      margin-right: 8px;
+      background-color: white;
+    }
+    
+    .options-btn {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .options-btn:hover {
+      text-decoration: underline;
+    }
+    
+    .options-icon {
+      width: 16px;
+      height: 16px;
+      margin-right: 4px;
+    }
+
+    .container {
+      padding: 15px;
+    }
+
+    .status-card {
+      background-color: var(--bg-light);
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .indicator-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: var(--text-muted);
+      margin-right: 10px;
+    }
+
+    .indicator-dot.active {
+      background-color: var(--success-color);
+      box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2);
+    }
+
+    .indicator-dot.inactive {
+      background-color: var(--text-muted);
+    }
+
+    .status-text {
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .toggle-container {
+      margin-top: 10px;
+    }
+
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 24px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .3s;
+      border-radius: 24px;
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .toggle-slider {
+      background-color: var(--success-color);
+    }
+
+    input:checked + .toggle-slider:before {
+      transform: translateX(24px);
+    }
+
+    .toggle-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .toggle-label {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .divider {
+      height: 1px;
+      background-color: var(--border-color);
+      margin: 15px 0;
+    }
+
+    .stats-container {
+      margin-top: 5px;
+    }
+
+    .stats-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--text-color);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .stat-box {
+      background-color: white;
+      border-radius: 6px;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stat-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      text-align: center;
+    }
+
+    .actions-container {
+      margin-top: 15px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      background-color: var(--primary-color);
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+    }
+
+    .btn-outline:hover {
+      background-color: rgba(52, 152, 219, 0.1);
+    }
+
+    .footer {
+      padding: 10px 15px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
+    }
+
+    .footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+    
+    .api-key-notice {
+      background-color: rgba(243, 156, 18, 0.1);
+      border: 1px solid var(--warning-color);
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: flex-start;
+    }
+    
+    .notice-icon {
+      width: 16px;
+      height: 16px;
+      color: var(--warning-color);
+      margin-right: 8px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    
+    .notice-text {
+      font-size: 12px;
+      color: var(--text-color);
+    }
+    
+    .notice-text a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .notice-text a:hover {
+      text-decoration: underline;
+    }
+
+    .card {
+      background-color: var(--bg-light);
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border-color);
+    }
+
+    .card-header {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .card-body {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .debug-status {
+      flex: 1;
+    }
+
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+
+    .status-label {
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .status-value {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .debug-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-sm {
+      padding: 5px 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <div class="logo-icon"></div>
+      <h1>Pearson MyLab AI Solver</h1>
+    </div>
+    <button id="openOptions" class="options-btn">
+      <svg class="options-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
+        <path d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336c44.2 0 80-35.8 80-80s-35.8-80-80-80s-80 35.8-80 80s35.8 80 80 80z"/>
+      </svg>
+      Settings
+    </button>
+  </div>
+
+  <div class="container">
+    <div id="apiKeyNotice" class="api-key-notice" style="display: none;">
+      <svg class="notice-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
+        <path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224c0-17.7-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32s32-14.3 32-32z"/>
+      </svg>
+      <div class="notice-text">
+        API key not configured. Please <a id="configureApiKey" href="#">add your API key</a> in the settings to use the AI solver.
+      </div>
+    </div>
+    
+    <div class="status-card">
+      <div class="status-indicator">
+        <div id="statusDot" class="indicator-dot inactive"></div>
+        <div id="statusText" class="status-text">Solver is inactive</div>
+      </div>
+      
+      <div class="toggle-row">
+        <span class="toggle-label">Enable AI Solver</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="solverToggle">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="stats-container">
+      <h2 class="stats-title">Statistics</h2>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div id="questionsAnalyzed" class="stat-value">0</div>
+          <div class="stat-label">Questions Analyzed</div>
+        </div>
+        <div class="stat-box">
+          <div id="questionsAnswered" class="stat-value">0</div>
+          <div class="stat-label">Questions Answered</div>
+        </div>
+        <div class="stat-box">
+          <div id="correctAnswers" class="stat-value">0</div>
+          <div class="stat-label">Correct Answers</div>
+        </div>
+        <div class="stat-box">
+          <div id="successRate" class="stat-value">0%</div>
+          <div class="stat-label">Success Rate</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions-container">
+      <button id="testCurrentBtn" class="btn">Solve Current Question</button>
+      <button id="resetStatsBtn" class="btn btn-outline">Reset Statistics</button>
+    </div>
+
+    <div class="card" id="debugPanel" style="display: none;">
+      <div class="card-header">Debug Information</div>
+      <div class="card-body">
+        <div class="debug-status">
+          <div class="status-row">
+            <span class="status-label">Flow Status:</span>
+            <span id="flowStatus" class="status-value">Unknown</span>
+          </div>
+          <div class="status-row">
+            <span class="status-label">Messages Sent:</span>
+            <span id="messagesSent" class="status-value">0</span>
+          </div>
+          <div class="status-row">
+            <span class="status-label">Messages Received:</span>
+            <span id="messagesReceived" class="status-value">0</span>
+          </div>
+          <div class="status-row">
+            <span class="status-label">Message Loops:</span>
+            <span id="messageLoops" class="status-value">0</span>
+          </div>
+        </div>
+        <div class="debug-actions">
+          <button id="analyzeMessageFlowBtn" class="btn btn-sm btn-outline">Analyze Message Flow</button>
+          <button id="resetStatsBtn" class="btn btn-sm btn-outline">Reset Debug Stats</button>
+          <button id="toggleDebugBtn" class="btn btn-sm btn-outline">Hide Debug</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>Pearson MyLab AI Solver v1.0.0 | <a id="openDocs" href="#">Documentation</a></p>
+  </div>
+
+  <script src="js/popup.js"></script>
+</body>
+</html> 
