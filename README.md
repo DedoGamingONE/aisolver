@@ -1,6 +1,6 @@
-# Pearson MyLab AI Solver
+#  AI Solver
 
-A Chrome extension that uses Claude AI to automatically solve questions in Pearson MyLab.
+A Chrome extension that uses Claude AI to automatically solve questions.
 
 ![Extension Logo](images/icon128.png)
 
@@ -45,7 +45,7 @@ A Chrome extension that uses Claude AI to automatically solve questions in Pears
 
 ### Basic Usage
 
-1. Navigate to a Pearson MyLab assignment
+1. Navigate to a assignment
 2. The solver will automatically detect questions on the page
 3. If auto-solving is enabled, the extension will attempt to solve questions automatically
 4. To manually solve a question, click the "Solve Current Question" button in the popup
@@ -123,5 +123,3 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Disclaimer
 
 This extension is meant for educational purposes only. Use it responsibly and in accordance with your institution's academic integrity policies.
-
-Pearson MyLab is a trademark of Pearson Education, Inc. This extension is not affiliated with, endorsed by, or sponsored by Pearson Education. 
